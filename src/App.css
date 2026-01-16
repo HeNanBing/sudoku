@@ -1,0 +1,228 @@
+:root {
+  --grey: #333;
+  --bg-color: #242424;
+  --text-color: rgba(255, 255, 255, 0.87);
+  --cell-size: clamp(32px, 5vw, 50px);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-color: #ffffff;
+    --text-color: #213547;
+  }
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 20px 0;
+}
+
+.app-layout {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(9, var(--cell-size));
+  grid-template-rows: repeat(9, var(--cell-size));
+  border: 3px solid var(--grey);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.cell:nth-child(9n) {
+  border-right: none;
+}
+
+.cell:nth-child(n+73) {
+  border-bottom: none;
+}
+
+.cell:nth-child(3n) {
+  border-right: 2px solid var(--grey);
+}
+
+.cell:nth-child(9n) {
+  border-right: none;
+}
+
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54) {
+  border-bottom: 2px solid var(--grey);
+}
+
+.cell input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: clamp(14px, 3vw, 24px);
+  border: none;
+  outline: none;
+  color: #000;
+  background: transparent;
+  font-weight: 500;
+  caret-color: transparent;
+}
+
+.cell input:focus {
+  background: #78b1eb;
+}
+
+.cell.prefilled input {
+  font-weight: 700;
+  color: #333;
+}
+
+.cell.same-row,
+.cell.same-col,
+.cell.same-box {
+  background: #e6f0ff;
+}
+
+.cell.green {
+  background-color: #a6f1a6;
+  transition: background-color 0.3s ease;
+}
+
+.number-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .number-pad {
+    justify-content: center;
+    align-self: center;
+  }
+}
+
+.number-btn {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  font-size: clamp(16px, 3vw, 24px);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.number-btn {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  font-size: clamp(16px, 3vw, 24px);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.number-btn:hover {
+  background: #333;
+  color: #fff;
+}
+
+.number-btn:active {
+  transform: scale(0.95);
+}
+
+.controls {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+@media (prefers-color-scheme: light) {
+  .controls button {
+    background-color: #f9f9f9;
+  }
+}
+
+.controls button:hover:not(:disabled) {
+  border-color: #646cff;
+}
+
+.controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.controls button:focus,
+.controls button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.status {
+  font-weight: bold;
+  position: fixed;
+  top: 20px;
+  background-color: #333;
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+h2 {
+  text-align: center;
+  margin: 0 0 20px 0;
+}

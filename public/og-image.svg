@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#242424"/>
+  <text x="600" y="280" font-family="system-ui, sans-serif" font-size="72" font-weight="bold" fill="#fff" text-anchor="middle">SUDOKU</text>
+  <text x="600" y="360" font-family="system-ui, sans-serif" font-size="36" fill="#646cff" text-anchor="middle">在线数独游戏</text>
+  <rect x="420" y="420" width="360" height="120" rx="16" fill="#fff"/>
+  <text x="600" y="500" font-family="system-ui, sans-serif" font-size="32" fill="#242424" text-anchor="middle">免费 · 撤销 · 新题目</text>
+</svg>

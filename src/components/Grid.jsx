@@ -1,0 +1,40 @@
+import classNames from "classnames";
+
+const Grid = ({ board, puzzle, selected, setSelected, handleInput, greenCount }) => {
+  return <div className="grid">
+    {board.map((row, rowIndex) => (
+      row.map((cell, cellIndex) => {
+        const isPrefilled = puzzle[rowIndex][cellIndex] !== null;
+        const cellNumber = rowIndex * 9 + cellIndex;
+        return <div key={`${rowIndex}-${cellIndex}`} className={classNames(
+          "cell",
+          {
+            'same-row': selected && rowIndex === selected[0],
+            'same-col': selected && cellIndex === selected[1],
+            'same-box': selected && Math.floor(rowIndex / 3) === Math.floor(selected[0] / 3) && Math.floor(cellIndex / 3) === Math.floor(selected[1] / 3),
+            'green': cellNumber < greenCount,
+            'prefilled': isPrefilled,
+          }
+        )}>
+          <input
+            type="text"
+            maxLength={1}
+            value={cell === null ? '' : cell}
+            readOnly={isPrefilled}
+            onFocus={() => {
+              setSelected([rowIndex, cellIndex]);
+            }}
+            onClick={() => {
+              setSelected([rowIndex, cellIndex]);
+            }}
+            onChange={(e) => {
+              handleInput(rowIndex, cellIndex, e.target.value);
+            }}
+          />
+        </div>;
+      })
+    ))}
+  </div>;
+}
+
+export default Grid;
