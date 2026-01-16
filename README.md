@@ -1,16 +1,87 @@
-# React + Vite
+# Sudoku 数独在线游戏
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一个免费、响应式的在线数独游戏，支持撤销、重置、新题目等功能。
 
-Currently, two official plugins are available:
+## 功能特性
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **在线数独** - 每日生成新的数独题目
+- **撤销功能** - 支持撤销填写的数字
+- **3x3数字面板** - 右侧数字候选面板，点击即可填写
+- **响应式设计** - 完美支持桌面和移动设备
+- **检查答案** - 一键验证答案正确性
+- **SEO优化** - 完整的元标签、结构化数据、社交分享预览
 
-## React Compiler
+## 在线预览
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+访问: http://localhost:5173/ (开发环境)
 
-## Expanding the ESLint configuration
+## 快速开始
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 安装依赖
+
+```bash
+npm install
+```
+
+### 启动开发服务器
+
+```bash
+npm run dev
+```
+
+### 构建生产版本
+
+```bash
+npm run build
+```
+
+### 运行 linting
+
+```bash
+npm run lint
+```
+
+## 项目结构
+
+```
+sudoku/
+├── public/
+│   ├── og-image.svg      # 社交分享预览图
+│   ├── robots.txt        # 搜索引擎爬虫规则
+│   └── sitemap.xml       # 网站地图
+├── src/
+│   ├── components/
+│   │   ├── Grid.jsx      # 数独网格组件
+│   │   ├── Controls.jsx  # 控制按钮组件
+│   │   └── NumberPad.jsx # 数字候选面板组件
+│   ├── App.jsx           # 主应用组件
+│   ├── App.css           # 样式文件
+│   ├── fetch-puzzle.js   # 数独题目获取
+│   └── main.jsx          # 应用入口
+├── index.html            # HTML模板(SEO优化)
+├── package.json
+└── vite.config.js
+```
+
+## 技术栈
+
+- **React 18** - UI框架
+- **Vite** - 构建工具
+- **ESLint** - 代码检查
+- **CSS Grid/Flexbox** - 布局
+
+## SEO特性
+
+本项目包含完整的SEO优化：
+
+- 语义化HTML标签 (`<main>`, `<header>`, `<h1>`)
+- 完整的Meta标签 (标题、描述、关键词)
+- Open Graph协议 (Facebook/LinkedIn分享)
+- Twitter Card (Twitter分享)
+- Schema.org结构化数据 (JSON-LD)
+- robots.txt 和 sitemap.xml
+- 社交分享预览图 (og-image.svg)
+
+## 许可证
+
+MIT License
