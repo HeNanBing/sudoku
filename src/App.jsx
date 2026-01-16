@@ -127,7 +127,7 @@ const App = () => {
   if (error) {
     return <main style={{ textAlign: 'center' }}>
       <header className="app-header">
-        <h1>Sudoku 数独</h1>
+        <h1>Sudoku</h1>
       </header>
       <div className='error'>{error}</div>
       <button onClick={handleNewPuzzle} style={{ marginTop: '16px' }}>Try Again</button>
@@ -137,7 +137,7 @@ const App = () => {
   if (!board) {
     return <main style={{ textAlign: 'center' }}>
       <header className="app-header">
-        <h1>Sudoku 数独</h1>
+        <h1>Sudoku</h1>
       </header>
       <div>Loading...</div>
     </main>;
@@ -145,7 +145,7 @@ const App = () => {
 
   return <main style={{ textAlign: 'center' }}>
     <header className="app-header">
-      <h1>Sudoku 数独</h1>
+      <h1>Sudoku</h1>
       <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
     </header>
     <div className="app-layout">
