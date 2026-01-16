@@ -1,15 +1,48 @@
 :root {
   --grey: #333;
-  --bg-color: #242424;
-  --text-color: rgba(255, 255, 255, 0.87);
   --cell-size: clamp(32px, 5vw, 50px);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-color: #ffffff;
-    --text-color: #213547;
-  }
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #213547;
+  --grid-bg: #fff;
+  --cell-border: #ccc;
+  --cell-border-bold: #333;
+  --cell-text: #000;
+  --prefilled-text: #333;
+  --highlight-bg: #e6f0ff;
+  --pad-bg: #fff;
+  --pad-border: #333;
+  --pad-text: #333;
+  --pad-hover-bg: #333;
+  --pad-hover-text: #fff;
+  --btn-bg: #f9f9f9;
+  --btn-text: inherit;
+  --status-bg: #333;
+  --header-btn-bg: #f0f0f0;
+  --header-btn-hover: #e0e0e0;
+}
+
+[data-theme="dark"] {
+  --bg-color: #242424;
+  --text-color: rgba(255, 255, 255, 0.87);
+  --grid-bg: #2a2a2a;
+  --cell-border: #555;
+  --cell-border-bold: #888;
+  --cell-text: #fff;
+  --prefilled-text: #ddd;
+  --highlight-bg: #3a4a6b;
+  --pad-bg: #2a2a2a;
+  --pad-border: #666;
+  --pad-text: #fff;
+  --pad-hover-bg: #555;
+  --pad-hover-text: #fff;
+  --btn-bg: #1a1a1a;
+  --btn-text: #fff;
+  --status-bg: #555;
+  --header-btn-bg: #333;
+  --header-btn-hover: #444;
 }
 
 body {
@@ -23,13 +56,64 @@ body {
   color: var(--text-color);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 20px 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.app-header h1 {
+  margin: 0;
+}
+
+.theme-toggle {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--header-btn-bg);
+  color: var(--text-color);
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.theme-toggle:hover {
+  background: var(--header-btn-hover);
+}
+
+.theme-toggle:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+@media (max-width: 600px) {
+  .theme-toggle {
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
 }
 
 .app-layout {
   display: flex;
   gap: 24px;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 @media (max-width: 768px) {
@@ -39,21 +123,41 @@ body {
   }
 }
 
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .side-panel {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+  }
+  .side-panel .number-pad {
+    align-self: flex-start;
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(9, var(--cell-size));
   grid-template-rows: repeat(9, var(--cell-size));
-  border: 3px solid var(--grey);
+  border: 3px solid var(--cell-border-bold);
   border-radius: 8px;
   overflow: hidden;
-  background: #fff;
+  background: var(--grid-bg);
 }
 
 .cell {
   width: var(--cell-size);
   height: var(--cell-size);
-  border-right: 1px solid #999;
-  border-bottom: 1px solid #999;
+  border-right: 1px solid var(--cell-border);
+  border-bottom: 1px solid var(--cell-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,7 +173,7 @@ body {
 }
 
 .cell:nth-child(3n) {
-  border-right: 2px solid var(--grey);
+  border-right: 2px solid var(--cell-border-bold);
 }
 
 .cell:nth-child(9n) {
@@ -78,7 +182,7 @@ body {
 
 .cell:nth-child(n+19):nth-child(-n+27),
 .cell:nth-child(n+46):nth-child(-n+54) {
-  border-bottom: 2px solid var(--grey);
+  border-bottom: 2px solid var(--cell-border-bold);
 }
 
 .cell input {
@@ -88,10 +192,11 @@ body {
   font-size: clamp(14px, 3vw, 24px);
   border: none;
   outline: none;
-  color: #000;
+  color: var(--cell-text);
   background: transparent;
   font-weight: 500;
   caret-color: transparent;
+  transition: color 0.3s ease;
 }
 
 .cell input:focus {
@@ -100,13 +205,13 @@ body {
 
 .cell.prefilled input {
   font-weight: 700;
-  color: #333;
+  color: var(--prefilled-text);
 }
 
 .cell.same-row,
 .cell.same-col,
 .cell.same-box {
-  background: #e6f0ff;
+  background: var(--highlight-bg);
 }
 
 .cell.green {
@@ -119,8 +224,9 @@ body {
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   padding: 16px;
-  background: #fff;
+  background: var(--pad-bg);
   border-radius: 8px;
+  align-self: flex-start;
 }
 
 @media (max-width: 768px) {
@@ -134,9 +240,9 @@ body {
   width: var(--cell-size);
   height: var(--cell-size);
   border-radius: 8px;
-  border: 2px solid #333;
-  background: #fff;
-  color: #333;
+  border: 2px solid var(--pad-border);
+  background: var(--pad-bg);
+  color: var(--pad-text);
   font-size: clamp(16px, 3vw, 24px);
   font-weight: bold;
   cursor: pointer;
@@ -147,22 +253,9 @@ body {
   padding: 0;
 }
 
-.number-btn {
-  width: var(--cell-size);
-  height: var(--cell-size);
-  border-radius: 8px;
-  border: 2px solid #333;
-  background: #fff;
-  color: #333;
-  font-size: clamp(16px, 3vw, 24px);
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
 .number-btn:hover {
-  background: #333;
-  color: #fff;
+  background: var(--pad-hover-bg);
+  color: var(--pad-hover-text);
 }
 
 .number-btn:active {
@@ -170,7 +263,6 @@ body {
 }
 
 .controls {
-  margin-top: 24px;
   display: flex;
   gap: 12px;
   justify-content: center;
@@ -184,15 +276,10 @@ body {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
   cursor: pointer;
   transition: all 0.25s ease;
-}
-
-@media (prefers-color-scheme: light) {
-  .controls button {
-    background-color: #f9f9f9;
-  }
 }
 
 .controls button:hover:not(:disabled) {
@@ -213,16 +300,20 @@ body {
   font-weight: bold;
   position: fixed;
   top: 20px;
-  background-color: #333;
+  background-color: var(--status-bg);
   padding: 12px 24px;
   border-radius: 8px;
   color: white;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
+  transition: background-color 0.3s ease;
 }
 
-h2 {
-  text-align: center;
-  margin: 0 0 20px 0;
+.error {
+  background: #ff4444;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  margin: 20px 0;
 }

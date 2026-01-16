@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Grid from './components/Grid';
 import Controls from './components/Controls';
 import NumberPad from './components/NumberPad';
+import ThemeToggle from './components/ThemeToggle';
 import './App.css';
 import { fetchPuzzle } from './fetch-puzzle';
 
@@ -18,6 +19,19 @@ const App = () => {
   const [selected, setSelected] = useState(null);
   const [greenCount, setGreenCount] = useState(0);
   const [history, setHistory] = useState([]);
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('sudoku-theme');
+    return saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('sudoku-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   const addToHistory = (row, col, newValue) => {
     setHistory(prev => [...prev, {
@@ -112,7 +126,9 @@ const App = () => {
 
   if (error) {
     return <main style={{ textAlign: 'center' }}>
-      <h1>Sudoku</h1>
+      <header className="app-header">
+        <h1>Sudoku 数独</h1>
+      </header>
       <div className='error'>{error}</div>
       <button onClick={handleNewPuzzle} style={{ marginTop: '16px' }}>Try Again</button>
     </main>;
@@ -120,20 +136,25 @@ const App = () => {
 
   if (!board) {
     return <main style={{ textAlign: 'center' }}>
-      <h1>Sudoku</h1>
+      <header className="app-header">
+        <h1>Sudoku 数独</h1>
+      </header>
       <div>Loading...</div>
     </main>;
   }
 
   return <main style={{ textAlign: 'center' }}>
-    <header>
-      <h1>Sudoku</h1>
+    <header className="app-header">
+      <h1>Sudoku 数独</h1>
+      <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
     </header>
     <div className="app-layout">
       <Grid board={board} puzzle={puzzle} selected={selected} setSelected={setSelected} handleInput={handleInput} greenCount={greenCount} />
-      <NumberPad onNumberSelect={handleNumberSelect} />
+      <div className="side-panel">
+        <NumberPad onNumberSelect={handleNumberSelect} />
+        <Controls handleCheck={handleCheck} handleReset={handleReset} handleNewPuzzle={handleNewPuzzle} handleUndo={handleUndo} canUndo={history.length > 0} />
+      </div>
     </div>
-    <Controls handleCheck={handleCheck} handleReset={handleReset} handleNewPuzzle={handleNewPuzzle} handleUndo={handleUndo} canUndo={history.length > 0} />
     {status && <div className='status'>{status}</div>}
   </main>;
 }
